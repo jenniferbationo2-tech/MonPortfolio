@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Identité BYCJ : chaque token devient une classe Tailwind
+   (ex. --color-navy → bg-navy, text-navy, border-navy…) */
+@theme {
+  --color-navy: #0b1220;
+  --color-navy-light: #111a2e;
+  --color-navy-deep: #070c16;
+  --color-cream: #f8fafc;
+  --color-orange: #ff7a00;
+  --color-orange-dark: #c2410c;
+  --color-electric: #2563eb;
+  --color-electric-light: #60a5fa;
+  --color-slate: #64748b;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream font-sans text-navy antialiased;
+}
