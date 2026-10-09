@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react'
-import { navLinks } from '../data/portfolio'
+import { cvFileName, navLinks, profile } from '../data/portfolio'
 import useActiveSection from '../hooks/useActiveSection'
 import Icon from './ui/Icon'
 
@@ -59,6 +59,15 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href={profile.cv}
+              download={cvFileName}
+              className="inline-flex items-center gap-2 rounded-lg border border-orange px-4 py-2.5 text-sm font-semibold text-orange transition-colors hover:bg-orange hover:text-navy"
+            >
+              <Icon name="download" size={16} /> CV
+            </a>
+          </li>
         </ul>
 
         <button
@@ -99,6 +108,16 @@ export default function Navbar() {
                 </a>
               </motion.li>
             ))}
+            <li className="border-t border-white/10 py-4">
+              <a
+                href={profile.cv}
+                download={cvFileName}
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-lg bg-orange py-3.5 font-semibold text-navy"
+              >
+                <Icon name="download" size={18} /> Télécharger mon CV
+              </a>
+            </li>
           </motion.ul>
         )}
       </AnimatePresence>

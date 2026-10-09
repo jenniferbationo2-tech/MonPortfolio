@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { projectFilters, projects } from '../data/portfolio'
 import Icon from './ui/Icon'
+import Lightbox from './ui/Lightbox'
 import Reveal from './ui/Reveal'
 import SectionHeading from './ui/SectionHeading'
 
-// Illustration de VEXDRONE : un pylône et un cadre de détection qui « scanne »
+// Illustration de VEXDRONE (sans capture) : un pylône et un cadre de détection qui « scanne »
 function DetectionVisual() {
   return (
-    <div className="relative h-56 overflow-hidden rounded-xl border border-slate-700 bg-navy">
+    <div className="relative h-full w-full overflow-hidden bg-navy">
       <svg aria-hidden="true" viewBox="0 0 400 220" className="absolute inset-0 h-full w-full" fill="none">
         <g stroke="#475569" strokeWidth="2">
           <path d="M200 20L160 200M200 20l40 180M170 150h60M178 110h44M186 70h28M140 60h120M150 100h100" />
@@ -25,7 +26,6 @@ function DetectionVisual() {
           anomalie
         </span>
       </motion.div>
-      {/* Ligne de scan */}
       <motion.div
         className="absolute inset-x-0 h-px bg-electric-light/70 shadow-[0_0_12px_#60A5FA]"
         animate={{ top: ['0%', '100%'] }}
@@ -36,7 +36,68 @@ function DetectionVisual() {
   )
 }
 
-function ProjectCard({ project }) {
+// Visuel de remplacement tant que la capture n'est pas ajoutée
+function PlaceholderVisual({ project }) {
+  if (project.type === 'ia') return <DetectionVisual />
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-navy bg-[radial-gradient(#1E293B_1px,transparent_1px)] [background-size:16px_16px]">
+      <span className="font-display text-2xl font-bold text-slate-600">{project.title}</span>
+    </div>
+  )
+}
+
+function hostname(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return ''
+  }
+}
+
+// Cadre façon navigateur autour de la capture d'écran
+function BrowserFrame({ project, onOpen }) {
+  // Pas d'image, ou fichier introuvable → visuel de remplacement (non cliquable)
+  const [failed, setFailed] = useState(!project.image)
+  const host = hostname(project.link)
+
+  return (
+    <div className="overflow-hidden rounded-xl border border-slate-700 bg-navy">
+      <div className="flex items-center gap-2 border-b border-slate-700 bg-navy-deep px-3 py-2">
+        <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
+        <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
+        <span className="h-2.5 w-2.5 rounded-full bg-slate-600" />
+        <span className="ml-2 truncate rounded bg-navy-light px-2 py-0.5 font-mono text-[11px] text-slate-400">
+          {host || project.title.toLowerCase()}
+        </span>
+      </div>
+      <div className={`relative ${project.featured ? 'aspect-[16/8]' : 'aspect-video'}`}>
+        {failed ? (
+          <PlaceholderVisual project={project} />
+        ) : (
+          <button
+            type="button"
+            onClick={onOpen}
+            aria-label={`Agrandir la capture de ${project.title}`}
+            className="group/frame relative block h-full w-full overflow-hidden"
+          >
+            <img
+              src={project.image}
+              alt={`Capture d'écran de ${project.title}`}
+              loading="lazy"
+              onError={() => setFailed(true)}
+              className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/frame:scale-105"
+            />
+            <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-navy/80 text-cream opacity-0 transition-opacity group-hover/frame:opacity-100">
+              <Icon name="expand" size={16} />
+            </span>
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function ProjectCard({ project, onOpenImage }) {
   return (
     <motion.article
       layout
@@ -45,36 +106,49 @@ function ProjectCard({ project }) {
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.35 }}
       whileHover={{ y: -6 }}
-      className={`group flex flex-col gap-4 rounded-2xl border border-slate-800 bg-navy-light p-7 transition-colors hover:border-orange/50 ${
-        project.featured ? 'md:col-span-2 md:p-10' : ''
+      className={`group flex flex-col gap-4 rounded-2xl border border-slate-800 bg-navy-light p-5 transition-colors hover:border-orange/50 sm:p-6 ${
+        project.featured ? 'md:col-span-2' : ''
       }`}
     >
-      {project.featured && <DetectionVisual />}
-      <p className="font-mono text-xs tracking-[0.18em] text-electric-light uppercase">{project.category}</p>
-      <h3 className={`font-display font-bold ${project.featured ? 'text-3xl' : 'text-2xl'}`}>{project.title}</h3>
-      <p className="text-sm text-slate-400">{project.context}</p>
-      <p className="leading-relaxed text-slate-300">{project.description}</p>
-      {project.stack.length > 0 && (
-        <ul className="flex flex-wrap gap-2">
-          {project.stack.map((tech) => (
-            <li key={tech} className="rounded-md border border-slate-700 px-3 py-1 font-mono text-xs text-slate-300">
-              {tech}
-            </li>
-          ))}
-        </ul>
-      )}
-      {project.link && (
-        <a href={project.link} target="_blank" rel="noreferrer" className="mt-auto inline-flex items-center gap-2 pt-2 font-semibold">
-          Voir le projet <Icon name="arrowRight" size={16} className="transition-transform group-hover:translate-x-1" />
-        </a>
-      )}
+      <BrowserFrame project={project} onOpen={() => onOpenImage(project)} />
+      <div className="flex flex-1 flex-col gap-3 px-1 pt-2">
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-electric-light">{project.category}</p>
+        <h3 className={`font-display font-bold ${project.featured ? 'text-3xl' : 'text-2xl'}`}>{project.title}</h3>
+        <p className="text-sm text-slate-400">{project.context}</p>
+        <p className="leading-relaxed text-slate-300">{project.description}</p>
+        {project.stack.length > 0 && (
+          <ul className="flex flex-wrap gap-2">
+            {project.stack.map((tech) => (
+              <li key={tech} className="rounded-md border border-slate-700 px-3 py-1 font-mono text-xs text-slate-300">
+                {tech}
+              </li>
+            ))}
+          </ul>
+        )}
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-auto inline-flex items-center gap-2 pt-2 font-semibold"
+          >
+            Visiter le site <Icon name="external" size={16} />
+          </a>
+        )}
+      </div>
     </motion.article>
   )
 }
 
 export default function Projects() {
   const [filter, setFilter] = useState('tous')
+  const [zoomed, setZoomed] = useState(null)
   const visible = filter === 'tous' ? projects : projects.filter((p) => p.type === filter)
+
+  const openImage = (project) =>
+    setZoomed({ src: project.image, alt: `Capture d'écran de ${project.title}`, caption: project.title })
+  // useCallback : garde la même fonction d'un affichage à l'autre (évite de relancer l'effet de la Lightbox)
+  const closeImage = useCallback(() => setZoomed(null), [])
 
   return (
     <section id="projets" className="bg-navy text-cream">
@@ -108,11 +182,13 @@ export default function Projects() {
         <motion.div layout className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((project) => (
-              <ProjectCard key={project.title} project={project} />
+              <ProjectCard key={project.title} project={project} onOpenImage={openImage} />
             ))}
           </AnimatePresence>
         </motion.div>
       </div>
+
+      <Lightbox image={zoomed} onClose={closeImage} />
     </section>
   )
 }

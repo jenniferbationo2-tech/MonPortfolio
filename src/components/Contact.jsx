@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { profile } from '../data/portfolio'
+import { cvFileName, profile } from '../data/portfolio'
 import Icon from './ui/Icon'
 import Reveal from './ui/Reveal'
 
@@ -68,6 +68,13 @@ export default function Contact() {
             </button>
           </div>
           <p className="font-mono text-sm text-slate-400">{profile.email}</p>
+          <a
+            href={profile.cv}
+            download={cvFileName}
+            className="mt-2 inline-flex items-center gap-2 font-semibold"
+          >
+            <Icon name="download" size={18} /> Télécharger mon CV (PDF)
+          </a>
         </Reveal>
 
         {socials.length > 0 && (

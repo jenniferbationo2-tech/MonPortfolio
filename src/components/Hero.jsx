@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { profile } from '../data/portfolio'
+import { cvFileName, profile } from '../data/portfolio'
 import NetworkBackground from './NetworkBackground'
 import Icon from './ui/Icon'
 
@@ -69,8 +69,16 @@ export default function Hero() {
               <Icon name="arrowRight" size={18} className="transition-transform group-hover:translate-x-1" />
             </a>
             <a
+              href={profile.cv}
+              download={cvFileName}
+              className="group inline-flex items-center gap-2.5 rounded-lg border border-slate-700 px-7 py-4 font-semibold transition hover:border-cream"
+            >
+              <Icon name="download" size={18} className="transition-transform group-hover:translate-y-0.5" />
+              Télécharger mon CV
+            </a>
+            <a
               href="#contact"
-              className="inline-flex items-center rounded-lg border border-slate-700 px-7 py-4 font-semibold transition hover:border-cream"
+              className="inline-flex items-center px-3 py-4 font-semibold text-slate-300 underline-offset-4 transition hover:text-cream hover:underline"
             >
               Me contacter
             </a>

@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { certifications, education, experiences } from '../data/portfolio'
 import Icon from './ui/Icon'
+import Lightbox from './ui/Lightbox'
 import Reveal from './ui/Reveal'
 import SectionHeading from './ui/SectionHeading'
 
@@ -29,8 +30,45 @@ function TimelineItem({ period, title, org, children, index }) {
   )
 }
 
+// Aperçu du certificat ; cliquable seulement si l'image existe
+function CertificateThumb({ cert, onOpen }) {
+  const [failed, setFailed] = useState(!cert.image)
+
+  if (failed) {
+    return (
+      <div className="flex aspect-[4/3] items-center justify-center bg-slate-100 text-orange-dark">
+        <Icon name="award" size={40} />
+      </div>
+    )
+  }
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`Agrandir le certificat ${cert.title}`}
+      className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-100"
+    >
+      <img
+        src={cert.image}
+        alt={`Certificat ${cert.title} — ${cert.org}`}
+        loading="lazy"
+        onError={() => setFailed(true)}
+        className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+      />
+      <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-navy/80 text-cream opacity-0 transition-opacity group-hover:opacity-100">
+        <Icon name="expand" size={16} />
+      </span>
+    </button>
+  )
+}
+
 export default function Journey() {
   const [tab, setTab] = useState('experiences')
+  const [zoomed, setZoomed] = useState(null)
+
+  const openCert = (cert) =>
+    setZoomed({ src: cert.image, alt: `Certificat ${cert.title}`, caption: `${cert.title} · ${cert.org} · ${cert.date}` })
+  const closeCert = useCallback(() => setZoomed(null), [])
 
   return (
     <section id="parcours" className="bg-cream">
@@ -104,23 +142,22 @@ export default function Journey() {
               )}
 
               {tab === 'certifications' && (
-                <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                   {certifications.map((cert, i) => (
                     <motion.li
                       key={cert.title}
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.06 }}
-                      className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-5"
+                      whileHover={{ y: -4 }}
+                      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-shadow hover:shadow-lg"
                     >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange/10 text-orange-dark">
-                        <Icon name="award" />
-                      </span>
-                      <span className="flex flex-col">
+                      <CertificateThumb cert={cert} onOpen={() => openCert(cert)} />
+                      <div className="flex flex-col p-5">
                         <span className="font-display font-semibold">{cert.title}</span>
                         <span className="text-sm text-slate-600">{cert.org}</span>
                         <span className="mt-1 font-mono text-xs text-slate-500">{cert.date}</span>
-                      </span>
+                      </div>
                     </motion.li>
                   ))}
                 </ul>
@@ -129,6 +166,8 @@ export default function Journey() {
           </AnimatePresence>
         </div>
       </div>
+
+      <Lightbox image={zoomed} onClose={closeCert} />
     </section>
   )
 }
