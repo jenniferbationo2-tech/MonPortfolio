@@ -12,7 +12,7 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/jennifer-bationo-2b6879352',
   currently: 'Stagiaire IA / Computer Vision — Orange Digital Center',
   // Fichiers placés dans le dossier public/
-  portrait: '/moi4.png',
+  portrait: '/moi4.jpg',
   cv: '/cv/BATIONO_Carine_Jennifer_CV_2026.pdf',
 }
 
@@ -58,29 +58,36 @@ export const about = {
   ],
 }
 
+// icon : icône de la catégorie ; les logos des compétences sont dans skillLogos.js
 export const skills = [
   {
     category: 'Développement Web',
+    icon: 'code',
     items: ['React', 'JavaScript', 'PHP', 'Laravel', 'Node.js', 'Inertia.js', 'WordPress'],
   },
   {
     category: 'Python & Data Science',
+    icon: 'chart',
     items: ['Python', 'NumPy', 'Matplotlib', 'Seaborn', 'Plotly', 'Django', 'Machine Learning'],
   },
   {
     category: 'IA & Computer Vision',
+    icon: 'brain',
     items: ['YOLO', 'Computer Vision'],
   },
   {
     category: 'Développement Mobile',
+    icon: 'phone',
     items: ['Flutter', 'Dart'],
   },
   {
     category: 'Réseaux & Systèmes',
+    icon: 'network',
     items: ['Cisco Packet Tracer', 'AWS Cloud (VPC)', 'Câblage structuré', 'Wifizone', 'Portails captifs'],
   },
   {
     category: 'Conception & Modélisation',
+    icon: 'layers',
     items: ['Merise', 'UML'],
   },
 ]
@@ -222,9 +229,9 @@ export const education = [
 // image : photo/scan du certificat placé dans public/certifications/
 export const certifications = [
   { title: 'Formation Python Data Analyst', org: 'REESO', date: 'Janv. — Avr. 2026', image: '/certifications/python-data-analyst.jpg' },
-  { title: 'Certificat Data Science & IA', org: 'GO AI Academy', date: 'Août 2025', image: '/certifications/data-science-ia.jpg' },
-  { title: 'Sécurité Réseau Cisco', org: 'Coursera / ODC', date: 'Oct. 2025', image: '/certifications/securite-reseau-cisco.jpg' },
-  { title: 'Décryptage avec Python', org: 'Coursera / ODC', date: 'Sept. 2025', image: '/certifications/decryptage-python.jpg' },
-  { title: 'VPC sur AWS Cloud', org: 'Coursera / ODC', date: 'Sept. 2025', image: '/certifications/vpc-aws.jpg' },
+  { title: 'Certificat Data Science & IA', org: 'GO AI Academy', date: 'Août 2025', image: '/certifications/GoIA.png' },
+  { title: 'Sécurité Réseau Cisco', org: 'Coursera / ODC', date: 'Oct. 2025', image: '/certifications/ciscocoursera.jpeg' },
+  { title: 'Décryptage avec Python', org: 'Coursera / ODC', date: 'Sept. 2025', image: '/certifications/pythoncoursera.png' },
+  { title: 'VPC sur AWS Cloud', org: 'Coursera / ODC', date: 'Sept. 2025', image: '/certifications/AWScoursera.jpeg' },
   { title: 'Sensibilisation Cybersécurité', org: 'Ministère de la Transition Digitale', date: 'Mai 2025', image: '/certifications/cybersecurite.jpg' },
 ]

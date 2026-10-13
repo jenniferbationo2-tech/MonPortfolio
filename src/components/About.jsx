@@ -16,7 +16,12 @@ export default function About() {
             </Reveal>
           ))}
           <Reveal delay={0.3}>
-            <h3 className="mb-3 font-mono text-sm text-slate-600">// Langues</h3>
+            <h3 className="mb-3 flex items-center gap-2.5 font-display text-base font-semibold">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange/10 text-orange-dark">
+                <Icon name="globe" size={18} />
+              </span>
+              Langues
+            </h3>
             <ul className="flex flex-wrap gap-2">
               {about.languages.map((lang) => (
                 <li key={lang.name} className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-sm">

@@ -48,7 +48,7 @@ export default function Hero() {
           className="flex min-w-0 flex-[1_1_520px] flex-col gap-7"
         >
           <motion.p variants={item} className="font-mono text-sm tracking-[0.2em] text-orange">
-            DATA • DEVELOPMENT • AI
+            DATA • DEVELOPPEMENT • AI
           </motion.p>
           <motion.h1
             variants={item}
