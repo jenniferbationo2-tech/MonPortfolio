@@ -241,5 +241,5 @@ export const certifications = [
   { title: 'Sécurité Réseau Cisco', org: 'Coursera / ODC', date: 'Oct. 2025', image: '/certifications/ciscocoursera.jpeg' },
   { title: 'Décryptage avec Python', org: 'Coursera / ODC', date: 'Sept. 2025', image: '/certifications/pythoncoursera.png' },
   { title: 'VPC sur AWS Cloud', org: 'Coursera / ODC', date: 'Sept. 2025', image: '/certifications/AWScoursera.jpeg' },
-  { title: 'Sensibilisation Cybersécurité', org: 'Ministère de la Transition Digitale', date: 'Mai 2025', image: '/certifications/cybersecurite.jpg' },
+  { title: 'Sensibilisation Cybersécurité', org: 'Ministère de la Transition Digitale', date: 'Mai 2025', image: '/certifications/sécurite.jpeg' },
 ]
