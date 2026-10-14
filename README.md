@@ -1,16 +1,38 @@
-# React + Vite
+# BYCJ. — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Portfolio de **Carine Jennifer Bationo Yiboula**, étudiante en Licence 3 Génie Informatique (Université Aube Nouvelle, Ouagadougou) — Web, Data & Intelligence Artificielle.
 
-Currently, two official plugins are available:
+## Sections
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Accueil** — présentation et accès rapide aux projets, au contact et au CV
+- **À propos** — profil, domaines (Web, Data & IA, Réseaux) et langues
+- **Compétences** — technologies classées par domaine, avec leurs logos
+- **Projets** — VEXDRONE, MoovFlow, sites web et projets académiques, filtrables par catégorie
+- **Parcours** — expériences, formation et certifications (aperçus agrandissables)
+- **Contact** — email, copie de l'adresse en un clic, GitHub, LinkedIn et téléchargement du CV
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Outil | Rôle |
+| --- | --- |
+| [React](https://react.dev) | Interface en composants |
+| [Vite](https://vite.dev) | Serveur de développement et build |
+| [Tailwind CSS](https://tailwindcss.com) | Styles et responsive |
+| [Motion](https://motion.dev) | Animations |
+| [Simple Icons](https://simpleicons.org) | Logos des technologies |
 
-## Expanding the Oxlint configuration
+Les animations respectent le réglage « réduire les animations » du système.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Lancer le projet
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # version de production dans dist/
+```
+
+## Modifier le contenu
+
+Tout le contenu (profil, compétences, projets, expériences, certifications) se trouve dans
+[`src/data/portfolio.js`](src/data/portfolio.js). Les images (portrait, certificats, captures de projets) et le CV
+sont dans `public/`.
