@@ -93,7 +93,9 @@ export const skills = [
 ]
 
 // type : sert au filtre de la section Projets
-// image : capture d'écran placée dans public/projets/ (si absente, un visuel de remplacement s'affiche)
+// icon : icône affichée en en-tête de la carte (voir components/ui/Icon.jsx)
+// image : capture d'écran optionnelle, ex. '/projets/moovflow.png' (fichier dans public/projets/).
+//         Vide = carte sans image, avec en-tête icône.
 export const projects = [
   {
     title: 'VEXDRONE',
@@ -104,7 +106,8 @@ export const projects = [
     description:
       "Système intelligent d'inspection des infrastructures électriques : détection automatique d'anomalies sur pylônes et lignes par vision par ordinateur, avec une application web de gestion et d'alerte.",
     stack: ['Python', 'YOLO', 'Computer Vision', 'Frontend web'],
-    image: '/projets/vexdrone.png',
+    icon: 'eye',
+    image: '',
     link: '',
   },
   {
@@ -115,7 +118,8 @@ export const projects = [
     description:
       "Plateforme web d'administration et de gestion des événements d'entreprise, conçue et réalisée de bout en bout.",
     stack: ['Laravel', 'PHP', 'Vue.js', 'Inertia.js', 'Tailwind CSS', 'MySQL'],
-    image: '/projets/moovflow.png',
+    icon: 'calendar',
+    image: '',
     link: '',
   },
   {
@@ -126,7 +130,8 @@ export const projects = [
     description:
       "Conception et réalisation intégrale du site de l'ABCA et du site officiel de l'entreprise, plus la migration du site du FESPACO et la mise en production de celui de la Cinémathèque Africaine.",
     stack: ['WordPress', 'Hébergement', 'Migration'],
-    image: '/projets/ias-tech.png',
+    icon: 'globe',
+    image: '',
     link: 'https://cinemathequeafricaine.bf/',
   },
   {
@@ -137,7 +142,8 @@ export const projects = [
     description:
       "Conception et réalisation intégrale du site de la clinique",
     stack: ['React', 'TypeScript', 'Hébergement', 'Migration'],
-    image: '/projets/clinique-nathan.png',
+    icon: 'health',
+    image: '',
     link: 'https://clinique-medical-nathan.vercel.app/',
   },
   {
@@ -148,7 +154,8 @@ export const projects = [
     description:
       'Application web de réservation et de gestion des chambres, avec gestion des clients et facturation automatisée. Travail en équipe sur l’architecture logicielle.',
     stack: [],
-    image: '/projets/gestion-hoteliere.png',
+    icon: 'building',
+    image: '',
     link: '',
   },
   {
@@ -159,7 +166,8 @@ export const projects = [
     description:
       'Plateforme de gestion de biens immobiliers : suivi des propriétés, locataires et contrats de bail, avec des interfaces adaptatives.',
     stack: [],
-    image: '/projets/gestion-immobiliere.png',
+    icon: 'home',
+    image: '',
     link: '',
   },
 ]

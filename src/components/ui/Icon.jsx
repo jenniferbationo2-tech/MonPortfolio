@@ -89,6 +89,20 @@ const paths = {
       <path d="M6.5 8v8M10 18.5h4M6.5 12H17v4" />
     </>
   ),
+  calendar: (
+    <>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4M8 14h2M14 14h2M8 17h2" />
+    </>
+  ),
+  health: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="4" />
+      <path d="M12 8v8M8 12h8" />
+    </>
+  ),
+  building: <path d="M4 21V5a2 2 0 012-2h8a2 2 0 012 2v16M16 9h2a2 2 0 012 2v10M2 21h20M8 7h4M8 11h4M8 15h4" />,
+  home: <path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5" />,
   download: <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />,
   expand: <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />,
   external: <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" />,

@@ -6,7 +6,7 @@ import Lightbox from './ui/Lightbox'
 import Reveal from './ui/Reveal'
 import SectionHeading from './ui/SectionHeading'
 
-// Illustration de VEXDRONE (sans capture) : un pylône et un cadre de détection qui « scanne »
+// Illustration de VEXDRONE (tant qu'il n'y a pas de capture) : un pylône et un cadre de détection qui « scanne »
 function DetectionVisual() {
   return (
     <div className="relative h-full w-full overflow-hidden bg-navy">
@@ -36,16 +36,6 @@ function DetectionVisual() {
   )
 }
 
-// Visuel de remplacement tant que la capture n'est pas ajoutée
-function PlaceholderVisual({ project }) {
-  if (project.type === 'ia') return <DetectionVisual />
-  return (
-    <div className="flex h-full w-full items-center justify-center bg-navy bg-[radial-gradient(#1E293B_1px,transparent_1px)] [background-size:16px_16px]">
-      <span className="font-display text-2xl font-bold text-slate-600">{project.title}</span>
-    </div>
-  )
-}
-
 function hostname(url) {
   try {
     return new URL(url).hostname.replace(/^www\./, '')
@@ -54,10 +44,8 @@ function hostname(url) {
   }
 }
 
-// Cadre façon navigateur autour de la capture d'écran
-function BrowserFrame({ project, onOpen }) {
-  // Pas d'image, ou fichier introuvable → visuel de remplacement (non cliquable)
-  const [failed, setFailed] = useState(!project.image)
+// Cadre façon navigateur (barre avec 3 points + adresse) autour d'un visuel
+function BrowserFrame({ project, children }) {
   const host = hostname(project.link)
 
   return (
@@ -70,34 +58,31 @@ function BrowserFrame({ project, onOpen }) {
           {host || project.title.toLowerCase()}
         </span>
       </div>
-      <div className={`relative ${project.featured ? 'aspect-[16/8]' : 'aspect-video'}`}>
-        {failed ? (
-          <PlaceholderVisual project={project} />
-        ) : (
-          <button
-            type="button"
-            onClick={onOpen}
-            aria-label={`Agrandir la capture de ${project.title}`}
-            className="group/frame relative block h-full w-full overflow-hidden"
-          >
-            <img
-              src={project.image}
-              alt={`Capture d'écran de ${project.title}`}
-              loading="lazy"
-              onError={() => setFailed(true)}
-              className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/frame:scale-105"
-            />
-            <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-navy/80 text-cream opacity-0 transition-opacity group-hover/frame:opacity-100">
-              <Icon name="expand" size={16} />
-            </span>
-          </button>
-        )}
-      </div>
+      <div className={`relative ${project.featured ? 'aspect-[16/8]' : 'aspect-video'}`}>{children}</div>
     </div>
   )
 }
 
-function ProjectCard({ project, onOpenImage }) {
+// En-tête des cartes sans image : icône du projet + grand numéro discret
+function CardHeader({ project, number }) {
+  return (
+    <div className="flex items-start justify-between">
+      <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-700 bg-navy text-orange transition-colors duration-300 group-hover:border-orange group-hover:bg-orange group-hover:text-navy">
+        <Icon name={project.icon ?? 'code'} size={22} />
+      </span>
+      <span aria-hidden="true" className="font-display text-5xl font-bold leading-none text-slate-800 transition-colors duration-300 group-hover:text-slate-700">
+        {number}
+      </span>
+    </div>
+  )
+}
+
+function ProjectCard({ project, number, onOpenImage }) {
+  // Capture renseignée mais introuvable → on bascule sur la carte sans image
+  const [imageFailed, setImageFailed] = useState(false)
+  const showImage = Boolean(project.image) && !imageFailed
+  const showDetection = !showImage && project.type === 'ia' && project.featured
+
   return (
     <motion.article
       layout
@@ -110,7 +95,34 @@ function ProjectCard({ project, onOpenImage }) {
         project.featured ? 'md:col-span-2' : ''
       }`}
     >
-      <BrowserFrame project={project} onOpen={() => onOpenImage(project)} />
+      {showImage && (
+        <BrowserFrame project={project}>
+          <button
+            type="button"
+            onClick={() => onOpenImage(project)}
+            aria-label={`Agrandir la capture de ${project.title}`}
+            className="group/frame relative block h-full w-full overflow-hidden"
+          >
+            <img
+              src={project.image}
+              alt={`Capture d'écran de ${project.title}`}
+              loading="lazy"
+              onError={() => setImageFailed(true)}
+              className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover/frame:scale-105"
+            />
+            <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-navy/80 text-cream opacity-0 transition-opacity group-hover/frame:opacity-100">
+              <Icon name="expand" size={16} />
+            </span>
+          </button>
+        </BrowserFrame>
+      )}
+      {showDetection && (
+        <BrowserFrame project={project}>
+          <DetectionVisual />
+        </BrowserFrame>
+      )}
+      {!showImage && !showDetection && <CardHeader project={project} number={number} />}
+
       <div className="flex flex-1 flex-col gap-3 px-1 pt-2">
         <p className="font-mono text-xs uppercase tracking-[0.18em] text-electric-light">{project.category}</p>
         <h3 className={`font-display font-bold ${project.featured ? 'text-3xl' : 'text-2xl'}`}>{project.title}</h3>
@@ -182,7 +194,13 @@ export default function Projects() {
         <motion.div layout className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {visible.map((project) => (
-              <ProjectCard key={project.title} project={project} onOpenImage={openImage} />
+              <ProjectCard
+                key={project.title}
+                project={project}
+                // Numéro fixe (ordre des données), même quand un filtre est actif
+                number={String(projects.indexOf(project) + 1).padStart(2, '0')}
+                onOpenImage={openImage}
+              />
             ))}
           </AnimatePresence>
         </motion.div>
