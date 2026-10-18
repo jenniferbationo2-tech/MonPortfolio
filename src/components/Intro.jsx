@@ -1,15 +1,58 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'motion/react'
+import { motion, useMotionTemplate, useMotionValue, useSpring } from 'motion/react'
 import { profile } from '../data/portfolio'
 import Icon from './ui/Icon'
 
-const bootLines = ['> initialisation du portfolio…', '> chargement des projets…', '> prêt. cliquez sur la pancarte']
-
-// Plis du rideau : fines bandes verticales
-const pleats = {
-  backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 56px)',
-}
+const bootLines = ['> initialisation du portfolio…', '> chargement des projets…', '> prêt. cliquez sur la photo pour entrer']
 const curtainEase = [0.76, 0, 0.24, 1]
+
+// Générateur pseudo-aléatoire « à graine » : les particules sont identiques
+// à chaque affichage (un vrai Math.random changerait tout à chaque rendu).
+function seeded(seed) {
+  let s = seed
+  return () => (s = (s * 16807) % 2147483647) / 2147483647
+}
+const rand = seeded(42)
+const particles = Array.from({ length: 28 }, () => ({
+  left: rand() * 100,
+  size: 2 + rand() * 3,
+  duration: 10 + rand() * 12,
+  delay: -rand() * 20, // délai négatif : les particules sont déjà en vol à l'ouverture
+  drift: (rand() - 0.5) * 80,
+  color: rand() > 0.6 ? '#FF7A00' : '#60A5FA',
+}))
+
+// Un pan du rideau : plis qui ondulent + particules de données qui montent
+function CurtainPanel({ side, opening, items }) {
+  const isLeft = side === 'left'
+  return (
+    <motion.div
+      className={`intro-curtain absolute inset-y-0 w-1/2 overflow-hidden bg-navy ${
+        isLeft ? 'left-0 border-r' : 'right-0 border-l'
+      } border-orange/60`}
+      animate={{ x: opening ? (isLeft ? '-100%' : '100%') : 0 }}
+      transition={{ duration: 1, delay: 0.45, ease: curtainEase }}
+    >
+      {items.map((p, i) => (
+        <span
+          key={i}
+          aria-hidden="true"
+          className="intro-particle absolute top-full rounded-full"
+          style={{
+            left: `${p.left}%`,
+            width: p.size,
+            height: p.size,
+            background: p.color,
+            boxShadow: `0 0 ${p.size * 3}px ${p.color}`,
+            '--duration': `${p.duration}s`,
+            '--delay': `${p.delay}s`,
+            '--drift': `${p.drift}px`,
+          }}
+        />
+      ))}
+    </motion.div>
+  )
+}
 
 // Écran d'accueil : une pancarte (la photo) suspendue à un clou sur un rideau.
 // onOpen : appelé au clic (le Hero démarre) ; onDone : quand le rideau est ouvert.
@@ -22,6 +65,13 @@ export default function Intro({ onOpen, onDone }) {
   const tilt = useMotionValue(0)
   const rotate = useSpring(tilt, { stiffness: 45, damping: 5, mass: 1.2 })
 
+  // Projecteur : un halo de lumière qui suit le curseur (centré au départ)
+  const lightX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0)
+  const lightY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight * 0.4 : 0)
+  const smoothX = useSpring(lightX, { stiffness: 80, damping: 20 })
+  const smoothY = useSpring(lightY, { stiffness: 80, damping: 20 })
+  const spotlight = useMotionTemplate`radial-gradient(520px circle at ${smoothX}px ${smoothY}px, rgba(255,122,0,0.13), rgba(37,99,235,0.06) 45%, transparent 70%)`
+
   const enter = () => {
     if (opening) return
     setOpening(true)
@@ -31,7 +81,7 @@ export default function Intro({ onOpen, onDone }) {
   }
 
   useEffect(() => {
-    // Page bloquée en haut tant que le rideau est fermé
+    // Page bloquée en haut tant que le rideau est fermé.
     // 'instant' : sinon le défilement doux du site s'appliquerait (cas « Revoir l'intro » depuis le bas)
     window.scrollTo({ top: 0, behavior: 'instant' })
     document.body.style.overflow = 'hidden'
@@ -59,9 +109,12 @@ export default function Intro({ onOpen, onDone }) {
     return () => document.removeEventListener('keydown', onKey)
   })
 
-  // La pancarte penche vers le curseur
   const handleMove = (e) => {
-    if (opening || !signRef.current) return
+    if (opening) return
+    lightX.set(e.clientX)
+    lightY.set(e.clientY)
+    // La pancarte penche vers le curseur
+    if (!signRef.current) return
     const rect = signRef.current.getBoundingClientRect()
     const dx = (e.clientX - (rect.left + rect.width / 2)) / (window.innerWidth / 2)
     tilt.set(Math.max(-1, Math.min(1, dx)) * 10)
@@ -72,18 +125,16 @@ export default function Intro({ onOpen, onDone }) {
       className={`fixed inset-0 z-[100] overflow-hidden ${opening ? 'pointer-events-none' : ''}`}
       onMouseMove={handleMove}
     >
-      {/* Rideau : deux pans qui s'écartent */}
+      <CurtainPanel side="left" opening={opening} items={particles.slice(0, 14)} />
+      <CurtainPanel side="right" opening={opening} items={particles.slice(14)} />
+
+      {/* Projecteur (respire doucement, suit le curseur) */}
       <motion.div
-        className="absolute inset-y-0 left-0 w-1/2 border-r border-orange/60 bg-navy"
-        style={pleats}
-        animate={{ x: opening ? '-100%' : 0 }}
-        transition={{ duration: 1, delay: 0.45, ease: curtainEase }}
-      />
-      <motion.div
-        className="absolute inset-y-0 right-0 w-1/2 border-l border-orange/60 bg-navy"
-        style={pleats}
-        animate={{ x: opening ? '100%' : 0 }}
-        transition={{ duration: 1, delay: 0.45, ease: curtainEase }}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{ background: spotlight }}
+        animate={{ opacity: opening ? 0 : [0.75, 1, 0.75] }}
+        transition={opening ? { duration: 0.3 } : { duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
 
       {/* Barre du haut : signature + passer l'intro */}
@@ -115,6 +166,20 @@ export default function Intro({ onOpen, onDone }) {
             : { type: 'spring', stiffness: 70, damping: 11, delay: 0.25 }
         }
       >
+        {/* Indice « cliquez ici » à côté de la pancarte (ordinateur) */}
+        <motion.div
+          aria-hidden="true"
+          className="absolute left-full top-[45%] ml-6 hidden items-center gap-2 whitespace-nowrap font-mono text-sm text-orange md:flex"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: opening ? 0 : 1, x: [0, -10, 0] }}
+          transition={{
+            opacity: { delay: opening ? 0 : 1.8, duration: 0.4 },
+            x: { duration: 1.2, repeat: Infinity, ease: 'easeInOut' },
+          }}
+        >
+          <Icon name="arrowRight" size={20} className="rotate-180" /> cliquez ici
+        </motion.div>
+
         <motion.div style={{ rotate, transformOrigin: '50% 0%' }} className="flex flex-col items-center">
           {/* Clou + fils */}
           <svg aria-hidden="true" viewBox="0 0 260 90" className="block w-full" fill="none">
@@ -127,10 +192,10 @@ export default function Intro({ onOpen, onDone }) {
             ref={signRef}
             type="button"
             onClick={enter}
-            aria-label="Entrer sur le portfolio"
+            aria-label="Cliquez sur la photo pour entrer sur le portfolio"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.97 }}
-            className="group relative -mt-1 w-full rounded-xl bg-cream p-3 pb-4 text-left text-navy shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] outline-none focus-visible:ring-4 focus-visible:ring-orange"
+            className="group relative -mt-1 w-full cursor-pointer rounded-xl bg-cream p-3 pb-4 text-left text-navy shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] outline-none focus-visible:ring-4 focus-visible:ring-orange"
           >
             {/* Œillets où passent les fils */}
             <span className="absolute left-[14px] top-2 h-3 w-3 rounded-full border-2 border-slate-400 bg-slate-200" />
@@ -144,16 +209,33 @@ export default function Intro({ onOpen, onDone }) {
               transition={{ duration: 2, repeat: Infinity, ease: 'easeOut', delay: 1.4 }}
             />
 
-            <span className="mt-4 block aspect-[4/5] overflow-hidden rounded-lg bg-slate-200">
-              <img src={profile.portrait} alt="" className="h-full w-full object-cover" />
+            <span className="relative mt-4 block aspect-[4/5] overflow-hidden rounded-lg bg-slate-200">
+              <img
+                src={profile.portrait}
+                alt=""
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Voile « Entrer » au survol */}
+              <span className="absolute inset-0 flex items-center justify-center bg-navy/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="flex items-center gap-2 rounded-full bg-cream px-4 py-2 font-display text-sm font-semibold text-navy">
+                  Entrer <Icon name="arrowRight" size={16} />
+                </span>
+              </span>
             </span>
+
             <span className="mt-3 block px-1">
               <span className="block font-display text-2xl font-bold leading-tight">
                 Bienvenue<span className="text-orange">.</span>
               </span>
-              <span className="mt-1 flex items-center gap-2 font-mono text-xs text-slate-600">
-                Entrez dans mon univers
-                <Icon name="arrowRight" size={14} className="text-orange transition-transform group-hover:translate-x-1" />
+              <span className="mt-2 flex items-center justify-center gap-2 rounded-lg bg-orange px-3 py-2 text-[13px] font-semibold text-navy">
+                <motion.span
+                  className="inline-flex"
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <Icon name="pointer" size={16} />
+                </motion.span>
+                Cliquez sur la photo pour entrer
               </span>
             </span>
           </motion.button>

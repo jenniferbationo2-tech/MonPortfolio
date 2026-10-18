@@ -22,6 +22,43 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ----- Intro : particules qui montent et rideau qui ondule ----- */
+@keyframes intro-rise {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  10%,
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--drift), -110vh);
+    opacity: 0;
+  }
+}
+
+@keyframes intro-sway {
+  0%,
+  100% {
+    background-position: 0 0, 0 0;
+  }
+  50% {
+    background-position: 14px 0, -60px 0;
+  }
+}
+
+.intro-particle {
+  animation: intro-rise var(--duration) linear var(--delay) infinite;
+}
+
+.intro-curtain {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 56px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0 90px, transparent 90px 180px);
+  animation: intro-sway 7s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

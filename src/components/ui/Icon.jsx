@@ -103,6 +103,9 @@ const paths = {
   ),
   building: <path d="M4 21V5a2 2 0 012-2h8a2 2 0 012 2v16M16 9h2a2 2 0 012 2v10M2 21h20M8 7h4M8 11h4M8 15h4" />,
   home: <path d="M3 11l9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5" />,
+  pointer: (
+    <path d="M22 14a8 8 0 01-8 8M18 11v-1a2 2 0 00-4 0M14 10V9a2 2 0 00-4 0v1M10 9.5V4a2 2 0 00-4 0v10M18 11a2 2 0 114 0v3a8 8 0 01-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 012.83-2.82L7 15" />
+  ),
   download: <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />,
   expand: <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />,
   external: <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5" />,
