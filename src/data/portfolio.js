@@ -14,12 +14,12 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/jennifer-bationo-2b6879352',
   currently: 'Stagiaire IA / Computer Vision — Orange Digital Center',
   // Fichiers placés dans le dossier public/
-  portrait: '/moi4.jpg',
-  cv: '/cv/BATIONO_Carine_Jennifer_CV_2026.pdf',
+  portrait: '/moiTop.jpg',
+  cv: '/cv/BATIONO_Yiboula_Carine_Jennifer.pdf',
 }
 
 // Nom du fichier tel qu'il sera enregistré sur l'ordinateur du visiteur
-export const cvFileName = 'CV_Carine_Jennifer_BATIONO.pdf'
+export const cvFileName = 'BATIONO_Yiboula_Carine_Jennifer.pdf'
 
 export const navLinks = [
   { id: 'apropos', label: 'À propos' },

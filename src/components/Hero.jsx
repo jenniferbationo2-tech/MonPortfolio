@@ -20,7 +20,8 @@ function Portrait() {
   const [missing, setMissing] = useState(false)
 
   return (
-    <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-slate-700 bg-navy-light shadow-[16px_16px_0_#FF7A00]">
+    // Petite sur mobile (à côté du badge), grande sur ordinateur
+    <div className="relative aspect-[4/5] w-36 shrink-0 overflow-hidden rounded-2xl border border-slate-700 bg-navy-light shadow-[8px_8px_0_#FF7A00] sm:w-48 lg:w-full lg:max-w-sm lg:rounded-3xl lg:shadow-[16px_16px_0_#FF7A00]">
       {missing ? (
         <div className="flex h-full items-center justify-center font-mono text-sm text-slate-400">[ TON PORTRAIT ]</div>
       ) : (
@@ -43,12 +44,13 @@ export default function Hero({ ready = true }) {
         <NetworkBackground className="pointer-events-none absolute -right-24 top-10 w-[720px] max-w-none opacity-40 md:-right-10" />
       )}
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-wrap items-center gap-16 px-4 pb-24 pt-32 sm:px-6">
+      {/* Mobile/tablette : photo en haut puis texte. Ordinateur (lg) : texte à gauche, photo à droite */}
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center gap-10 px-4 pb-24 pt-28 sm:px-6 lg:flex-row lg:items-center lg:gap-16 lg:pt-32">
         <motion.div
           variants={container}
           initial="hidden"
           animate={ready ? 'show' : 'hidden'}
-          className="flex min-w-0 flex-[1_1_520px] flex-col gap-7"
+          className="flex min-w-0 flex-1 flex-col gap-7"
         >
           <motion.p variants={item} className="font-mono text-sm tracking-[0.2em] text-orange">
             DATA • DÉVELOPPEMENT • IA
@@ -95,14 +97,14 @@ export default function Hero({ ready = true }) {
           initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
           animate={ready ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.92, rotate: -2 }}
           transition={{ duration: 1, delay: ready ? 0.5 : 0, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex flex-[0_1_400px] flex-col items-center"
+          className="relative order-first flex items-end gap-5 sm:gap-6 lg:order-last lg:block lg:w-[380px] lg:shrink-0"
         >
           <Portrait />
-          {/* Badge « Actuellement » qui flotte doucement */}
+          {/* Badge « Actuellement » : à côté de la photo sur mobile, posé dessus et flottant sur ordinateur */}
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute -bottom-6 -left-4 flex max-w-[280px] items-center gap-3 rounded-xl border border-white/10 bg-navy-light/95 px-4 py-3 shadow-xl backdrop-blur sm:-left-10"
+            className="relative mb-3 flex max-w-[220px] items-center gap-3 rounded-xl border border-white/10 bg-navy-light/95 px-4 py-3 shadow-xl backdrop-blur lg:absolute lg:-bottom-6 lg:-left-10 lg:mb-0 lg:max-w-[280px]"
           >
             <span className="relative flex h-2.5 w-2.5 shrink-0">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange opacity-75" />
