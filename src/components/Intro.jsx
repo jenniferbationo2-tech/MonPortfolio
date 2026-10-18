@@ -22,16 +22,36 @@ const particles = Array.from({ length: 28 }, () => ({
   color: rand() > 0.6 ? '#FF7A00' : '#60A5FA',
 }))
 
+// Forme du pan de rideau via clip-path : `inner` = position (en %) du bord intérieur,
+// du haut vers le bas. Faire varier ces points donne l'effet de drapé qui se relève.
+const edgeY = [0, 20, 40, 60, 80, 100]
+const drape = {
+  closed: [100, 100, 100, 100, 100, 100],
+  lifting: [90, 80, 64, 44, 24, 6], // le bas s'ouvre d'abord, le bord se courbe
+  open: [0, 0, 0, 0, 0, 0],
+}
+function drapeShape(inner, isLeft) {
+  const outer = isLeft ? 0 : 100
+  const points = inner.map((x, i) => `${isLeft ? x : 100 - x}% ${edgeY[i]}%`)
+  return `polygon(${outer}% 0%, ${points.join(', ')}, ${outer}% 100%)`
+}
+
 // Un pan du rideau : plis qui ondulent + particules de données qui montent
 function CurtainPanel({ side, opening, items }) {
   const isLeft = side === 'left'
+  const closed = drapeShape(drape.closed, isLeft)
   return (
     <motion.div
       className={`intro-curtain absolute inset-y-0 w-1/2 overflow-hidden bg-navy ${
         isLeft ? 'left-0 border-r' : 'right-0 border-l'
       } border-orange/60`}
-      animate={{ x: opening ? (isLeft ? '-100%' : '100%') : 0 }}
-      transition={{ duration: 1, delay: 0.45, ease: curtainEase }}
+      style={{ clipPath: closed }}
+      animate={{
+        clipPath: opening
+          ? [closed, drapeShape(drape.lifting, isLeft), drapeShape(drape.open, isLeft)]
+          : closed,
+      }}
+      transition={{ duration: 1.3, delay: 0.35, times: [0, 0.45, 1], ease: curtainEase }}
     >
       {items.map((p, i) => (
         <span
@@ -51,6 +71,50 @@ function CurtainPanel({ side, opening, items }) {
         />
       ))}
     </motion.div>
+  )
+}
+
+// Étincelles réparties en cercle autour de la pancarte
+const sparks = Array.from({ length: 16 }, (_, i) => {
+  const angle = (i / 16) * Math.PI * 2
+  const distance = 26 + rand() * 18 // en vmin
+  return {
+    x: `${Math.cos(angle) * distance}vmin`,
+    y: `${Math.sin(angle) * distance}vmin`,
+    size: 3 + rand() * 4,
+    color: i % 3 === 0 ? '#60A5FA' : '#FF7A00',
+  }
+})
+
+function RevealBurst() {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-[38%]">
+      {/* Halo de lumière qui se diffuse */}
+      <motion.span
+        className="absolute h-[70vmax] w-[70vmax] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{ background: 'radial-gradient(circle, rgba(255,122,0,0.35), rgba(255,122,0,0.08) 40%, transparent 70%)' }}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: [0, 1.6], opacity: [0, 1, 0] }}
+        transition={{ duration: 1.3, delay: 0.25, ease: 'easeOut' }}
+      />
+      {/* Onde fine */}
+      <motion.span
+        className="absolute h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange/70"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: [0, 6], opacity: [0, 0.8, 0] }}
+        transition={{ duration: 1.1, delay: 0.3, ease: 'easeOut' }}
+      />
+      {sparks.map((s, i) => (
+        <motion.span
+          key={i}
+          className="absolute rounded-full"
+          style={{ width: s.size, height: s.size, background: s.color, boxShadow: `0 0 ${s.size * 3}px ${s.color}` }}
+          initial={{ x: 0, y: 0, opacity: 0, scale: 0.5 }}
+          animate={{ x: s.x, y: s.y, opacity: [0, 1, 0], scale: [0.5, 1, 0.3] }}
+          transition={{ duration: 1.1, delay: 0.3 + (i % 4) * 0.03, ease: [0.22, 1, 0.36, 1] }}
+        />
+      ))}
+    </div>
   )
 }
 
@@ -138,7 +202,7 @@ export default function Intro({ onOpen, onDone }) {
     setOpening(true)
     tilt.set(0)
     onOpen()
-    setTimeout(onDone, 1500)
+    setTimeout(onDone, 1750)
   }
 
   useEffect(() => {
@@ -198,19 +262,14 @@ export default function Intro({ onOpen, onDone }) {
         transition={opening ? { duration: 0.3 } : { duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      {/* Barre du haut : mêmes marges que la navbar, pour que « BYCJ. » tombe pile sur le logo */}
+      {/* Éclat de lumière + étincelles à l'ouverture */}
+      {opening && <RevealBurst />}
+
+      {/* Barre du haut : mêmes marges que la navbar, pour que « BYCJ. » tombe pile sur le logo.
+          min-h-[76px] : même hauteur que la ligne de la navbar */}
       <div className="absolute inset-x-0 top-0">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+        <div className="mx-auto flex min-h-[76px] max-w-6xl items-center px-4 py-4 sm:px-6">
           <SignatureName collapsed={opening} />
-          <motion.button
-            type="button"
-            onClick={enter}
-            animate={{ opacity: opening ? 0 : 1 }}
-            transition={{ duration: 0.3 }}
-            className="flex min-h-11 shrink-0 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-400 transition-colors hover:text-cream"
-          >
-            Passer l'intro <Icon name="arrowRight" size={16} />
-          </motion.button>
         </div>
       </div>
 
