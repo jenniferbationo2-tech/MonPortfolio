@@ -3,6 +3,8 @@
 
 export const profile = {
   name: 'Yiboula Carine Jennifer BATIONO',
+  // Nom affiché sur l'intro : les initiales de chaque mot forment la signature BYCJ
+  signatureName: 'BATIONO Yiboula Carine Jennifer',
   shortName: 'Carine Jennifer',
   role: 'Étudiante en Licence 3 Génie Informatique',
   location: 'Ouagadougou, Burkina Faso',

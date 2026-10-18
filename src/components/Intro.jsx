@@ -54,6 +54,67 @@ function CurtainPanel({ side, opening, items }) {
   )
 }
 
+// Nom complet ; à l'ouverture, seules les initiales restent et forment « BYCJ. »
+const words = profile.signatureName.split(' ')
+const nameEase = [0.65, 0, 0.35, 1]
+
+function SignatureName({ collapsed }) {
+  return (
+    <motion.div
+      className="relative min-w-0"
+      // Fondu final : laisse la place au logo de la navbar, juste en dessous
+      animate={{ opacity: collapsed ? 0 : 1 }}
+      transition={{ delay: collapsed ? 1.1 : 0, duration: 0.35 }}
+    >
+      <span
+        aria-label={profile.signatureName}
+        className="flex flex-wrap font-display text-lg font-bold tracking-wide sm:text-2xl"
+      >
+        {words.map((word, i) => (
+          <span key={word} aria-hidden="true" className="flex">
+            {/* Initiale : apparaît en se « défloutant », reste à l'ouverture */}
+            <motion.span
+              className="text-cream"
+              initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ delay: 0.4 + i * 0.15, duration: 0.6 }}
+            >
+              {word[0]}
+            </motion.span>
+            {/* Reste du mot (+ espace) : se replie à l'ouverture */}
+            <motion.span
+              className="overflow-hidden whitespace-pre font-medium text-slate-400"
+              initial={{ opacity: 0 }}
+              animate={collapsed ? { width: 0, opacity: 0 } : { opacity: 1 }}
+              transition={collapsed ? { duration: 0.5, ease: nameEase } : { delay: 0.7 + i * 0.15, duration: 0.8 }}
+            >
+              {word.slice(1) + (i < words.length - 1 ? ' ' : '')}
+            </motion.span>
+          </span>
+        ))}
+        <motion.span
+          aria-hidden="true"
+          className="text-orange"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={collapsed ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+          transition={{ delay: collapsed ? 0.4 : 0, type: 'spring', stiffness: 400, damping: 15 }}
+        >
+          .
+        </motion.span>
+      </span>
+      <motion.span
+        aria-hidden="true"
+        className="absolute left-0 top-full mt-0.5 font-mono text-[10px] tracking-[0.3em] text-orange sm:text-[11px]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: collapsed ? 0 : 1 }}
+        transition={{ delay: collapsed ? 0 : 1.4, duration: 0.4 }}
+      >
+        PORTFOLIO
+      </motion.span>
+    </motion.div>
+  )
+}
+
 // Écran d'accueil : une pancarte (la photo) suspendue à un clou sur un rideau.
 // onOpen : appelé au clic (le Hero démarre) ; onDone : quand le rideau est ouvert.
 export default function Intro({ onOpen, onDone }) {
@@ -137,23 +198,21 @@ export default function Intro({ onOpen, onDone }) {
         transition={opening ? { duration: 0.3 } : { duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      {/* Barre du haut : signature + passer l'intro */}
-      <motion.div
-        className="absolute inset-x-0 top-0 flex items-center justify-between px-4 py-4 sm:px-6"
-        animate={{ opacity: opening ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        <span className="font-display text-2xl font-bold tracking-wide text-cream">
-          BYCJ<span className="text-orange">.</span>
-        </span>
-        <button
-          type="button"
-          onClick={enter}
-          className="flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-400 transition-colors hover:text-cream"
-        >
-          Passer l'intro <Icon name="arrowRight" size={16} />
-        </button>
-      </motion.div>
+      {/* Barre du haut : mêmes marges que la navbar, pour que « BYCJ. » tombe pile sur le logo */}
+      <div className="absolute inset-x-0 top-0">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+          <SignatureName collapsed={opening} />
+          <motion.button
+            type="button"
+            onClick={enter}
+            animate={{ opacity: opening ? 0 : 1 }}
+            transition={{ duration: 0.3 }}
+            className="flex min-h-11 shrink-0 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-400 transition-colors hover:text-cream"
+          >
+            Passer l'intro <Icon name="arrowRight" size={16} />
+          </motion.button>
+        </div>
+      </div>
 
       {/* Pancarte suspendue */}
       <motion.div
