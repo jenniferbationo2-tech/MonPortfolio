@@ -35,16 +35,19 @@ function Portrait() {
   )
 }
 
-export default function Hero() {
+// ready : false tant que le rideau de l'intro est fermé → les animations attendent
+export default function Hero({ ready = true }) {
   return (
     <section id="accueil" className="relative overflow-hidden bg-navy text-cream">
-      <NetworkBackground className="pointer-events-none absolute -right-24 top-10 w-[720px] max-w-none opacity-40 md:-right-10" />
+      {ready && (
+        <NetworkBackground className="pointer-events-none absolute -right-24 top-10 w-[720px] max-w-none opacity-40 md:-right-10" />
+      )}
 
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-wrap items-center gap-16 px-4 pb-24 pt-32 sm:px-6">
         <motion.div
           variants={container}
           initial="hidden"
-          animate="show"
+          animate={ready ? 'show' : 'hidden'}
           className="flex min-w-0 flex-[1_1_520px] flex-col gap-7"
         >
           <motion.p variants={item} className="font-mono text-sm tracking-[0.2em] text-orange">
@@ -90,8 +93,8 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          animate={ready ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.92, rotate: -2 }}
+          transition={{ duration: 1, delay: ready ? 0.5 : 0, ease: [0.22, 1, 0.36, 1] }}
           className="relative flex flex-[0_1_400px] flex-col items-center"
         >
           <Portrait />
@@ -119,8 +122,8 @@ export default function Hero() {
         aria-label="Descendre vers la section À propos"
         className="absolute bottom-8 left-1/2 hidden h-11 w-7 -translate-x-1/2 justify-center rounded-full border-2 border-slate-600 pt-2 lg:flex"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
+        animate={{ opacity: ready ? 1 : 0 }}
+        transition={{ delay: ready ? 1.6 : 0 }}
       >
         <motion.span
           className="h-2 w-1 rounded-full bg-orange"
