@@ -12,12 +12,15 @@ import Footer from './components/Footer'
 
 const INTRO_KEY = 'bycj-intro-vue'
 
-// L'intro ne s'affiche qu'à la première visite, et jamais si la personne
-// a demandé à son système de réduire les animations.
+// L'intro s'affiche à chaque nouvelle visite (nouvel onglet), mais pas quand on
+// recharge la page : sessionStorage est effacé à la fermeture de l'onglet.
+// Elle est sautée si le lien pointe vers une section (ex. /#projets) ou si la
+// personne a demandé à son système de réduire les animations.
 function shouldShowIntro() {
   try {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
-    return localStorage.getItem(INTRO_KEY) !== '1'
+    if (window.location.hash && window.location.hash !== '#accueil') return false
+    return sessionStorage.getItem(INTRO_KEY) !== '1'
   } catch {
     return false
   }
@@ -31,7 +34,7 @@ function App() {
   const finishIntro = useCallback(() => {
     setShowIntro(false)
     try {
-      localStorage.setItem(INTRO_KEY, '1')
+      sessionStorage.setItem(INTRO_KEY, '1')
     } catch {
       // Stockage indisponible (navigation privée) : l'intro reviendra, ce n'est pas grave
     }
