@@ -166,7 +166,7 @@ export default function Projects() {
     <section id="projets" className="bg-navy text-cream">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-28 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading number="03" label="Projets" title="Projets sélectionnés" dark />
+          <SectionHeading number="03" label="Projets" title="Ce que j'ai construit" dark />
 
           <Reveal>
             <div role="group" aria-label="Filtrer les projets" className="flex flex-wrap gap-1 rounded-xl border border-slate-800 p-1">

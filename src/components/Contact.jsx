@@ -30,12 +30,13 @@ export default function Contact() {
         </Reveal>
         <Reveal delay={0.1}>
           <h2 className="font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-            Un projet, une idée, une opportunité ? Parlons-en<span className="text-orange">.</span>
+            Votre prochain projet mérite d'exister. Construisons-le ensemble<span className="text-orange">.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
           <p className="max-w-xl text-lg leading-relaxed text-slate-300">
-            Je suis ouverte aux stages, collaborations et projets autour du Web, de la Data et de l'IA.
+            Un stage, une collaboration, un projet Web, Data ou IA ? Écrivez-moi : je serai ravie d'en discuter avec
+            vous, et ce premier échange ne vous engage à rien.
           </p>
         </Reveal>
 
@@ -45,7 +46,7 @@ export default function Contact() {
               href={`mailto:${profile.email}`}
               className="flex flex-1 items-center justify-center gap-2.5 rounded-lg bg-orange px-6 py-4 font-semibold text-navy transition hover:bg-[#ff8f2b]"
             >
-              <Icon name="mail" size={18} /> M'écrire
+              <Icon name="mail" size={18} /> Écrivez-moi
             </a>
             <button
               type="button"

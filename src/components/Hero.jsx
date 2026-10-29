@@ -62,8 +62,8 @@ export default function Hero({ ready = true }) {
             Je transforme les idées en solutions numériques<span className="text-orange">.</span>
           </motion.h1>
           <motion.p variants={item} className="max-w-xl text-lg leading-relaxed text-slate-300">
-            Développeuse passionnée par le Web, la Data et l'Intelligence Artificielle, je conçois des applications et
-            des solutions intelligentes répondant à des problèmes réels.
+            Vous avez une idée ou un problème à résoudre ? Je conçois l'application qui y répond : du site web qui attire
+            vos clients à l'IA qui repère les anomalies sur les lignes électriques.
           </motion.p>
           <motion.div variants={item} className="flex flex-wrap gap-4 pt-2">
             <a
@@ -85,7 +85,7 @@ export default function Hero({ ready = true }) {
               href="#contact"
               className="inline-flex items-center px-3 py-4 font-semibold text-slate-300 underline-offset-4 transition hover:text-cream hover:underline"
             >
-              Me contacter
+              Discutons de votre projet
             </a>
           </motion.div>
           <motion.p variants={item} className="flex items-center gap-2 text-sm text-slate-400">

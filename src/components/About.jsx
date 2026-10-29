@@ -9,7 +9,7 @@ export default function About() {
     <section id="apropos" className="bg-cream">
       <div className="mx-auto flex max-w-6xl flex-wrap gap-16 px-4 py-28 sm:px-6">
         <div className="flex min-w-0 flex-[1_1_360px] flex-col gap-6">
-          <SectionHeading number="01" label="À propos" title="Coder avec une intention" />
+          <SectionHeading number="01" label="À propos" title="Du code qui sert à quelque chose" />
           {about.text.map((paragraph, i) => (
             <Reveal key={i} delay={0.1 * (i + 1)}>
               <p className="text-[17px] leading-relaxed text-slate-600">{paragraph}</p>

@@ -73,7 +73,7 @@ export default function Journey() {
   return (
     <section id="parcours" className="bg-cream">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-28 sm:px-6">
-        <SectionHeading number="04" label="Parcours" title="Expériences & formation" />
+        <SectionHeading number="04" label="Parcours" title="Là où j'ai fait mes preuves" />
 
         <Reveal>
           <div role="tablist" aria-label="Parcours" className="flex flex-wrap gap-2 border-b border-slate-200">

@@ -12,7 +12,7 @@ export const profile = {
   // Liens laissés vides = boutons masqués automatiquement
   github: 'https://github.com/jenniferbationo2-tech',
   linkedin: 'https://www.linkedin.com/in/jennifer-bationo-2b6879352',
-  currently: 'Stagiaire IA / Computer Vision — Orange Digital Center',
+  currently: 'En stage IA / Computer Vision chez Orange Digital Center',
   // Fichiers placés dans le dossier public/
   portrait: '/moiTop.jpg',
   cv: '/cv/BATIONO_Yiboula_Carine_Jennifer.pdf',
@@ -31,24 +31,24 @@ export const navLinks = [
 
 export const about = {
   text: [
-    "Étudiante en 3e année de Licence en Génie Informatique à l'Université Aube Nouvelle, je construis des solutions qui vont du site web à la vision par ordinateur, en passant par l'infrastructure réseau.",
-    "Créative et autodidacte, j'aime partir d'un problème réel et le transformer en une solution concrète et fonctionnelle.",
+    "Je suis Carine Jennifer, étudiante en 3e année de Génie Informatique à l'Université Aube Nouvelle. Mon terrain de jeu ? Tout ce qui va du site web à l'intelligence artificielle, en passant par le réseau qui relie le tout.",
+    "Créative et autodidacte, je pars toujours d'un besoin réel : surveiller des lignes électriques grâce à l'IA, centraliser les événements d'une entreprise, mettre en ligne le site d'une grande institution. Ce que je construis doit vous simplifier la vie, pas la compliquer.",
   ],
   pillars: [
     {
       icon: 'code',
       title: 'Développement Web',
-      text: "Des plateformes complètes, du back-end Laravel/Node.js aux interfaces React.",
+      text: 'Des plateformes complètes, pensées pour celles et ceux qui les utilisent, du back-end Laravel/Node.js aux interfaces React.',
     },
     {
       icon: 'brain',
       title: 'Data & IA',
-      text: 'Analyse de données, Machine Learning et détection d’objets avec YOLO.',
+      text: 'Des données qui parlent et des modèles qui voient : analyse, Machine Learning et détection d’objets avec YOLO.',
     },
     {
       icon: 'network',
       title: 'Réseaux & Systèmes',
-      text: 'Câblage, routeurs, Wifizone, portails captifs et cloud AWS.',
+      text: 'Des connexions fiables, du câble au cloud : routeurs, Wifizone, portails captifs et AWS.',
     },
   ],
   languages: [
@@ -106,7 +106,7 @@ export const projects = [
     featured: true,
     context: 'Orange Digital Center — Orange Summer Challenge 2026',
     description:
-      "Système intelligent d'inspection des infrastructures électriques : détection automatique d'anomalies sur pylônes et lignes par vision par ordinateur, avec une application web de gestion et d'alerte.",
+      "Repérer un défaut sur une ligne électrique avant qu'il ne devienne une panne : c'est la mission de VEXDRONE. Le système détecte automatiquement les anomalies sur les pylônes et les lignes par vision par ordinateur, puis alerte les équipes via une application web.",
     stack: ['Python', 'YOLO', 'Computer Vision', 'Frontend web'],
     icon: 'eye',
     image: '',
@@ -118,7 +118,7 @@ export const projects = [
     type: 'web',
     context: 'Moov Africa Burkina — Stage de fin de cycle',
     description:
-      "Plateforme web d'administration et de gestion des événements d'entreprise, conçue et réalisée de bout en bout.",
+      "Une seule plateforme pour administrer et suivre tous les événements d'une entreprise. J'ai conçu et développé MoovFlow de A à Z pendant mon stage de fin de cycle.",
     stack: ['Laravel', 'PHP', 'Vue.js', 'Inertia.js', 'Tailwind CSS', 'MySQL'],
     icon: 'calendar',
     image: '',
@@ -130,7 +130,7 @@ export const projects = [
     type: 'web',
     context: 'Impact Africa Solution Technology',
     description:
-      "Conception et réalisation intégrale du site de l'ABCA et du site officiel de l'entreprise, plus la migration du site du FESPACO et la mise en production de celui de la Cinémathèque Africaine.",
+      "Du FESPACO à la Cinémathèque Africaine, des sites qui portent l'image de grandes institutions. J'ai créé de A à Z les sites de l'ABCA et d'IAS Tech, migré celui du FESPACO et mis en production celui de la Cinémathèque Africaine.",
     stack: ['WordPress', 'Hébergement', 'Migration'],
     icon: 'globe',
     image: '',
@@ -142,7 +142,7 @@ export const projects = [
     type: 'web',
     context: 'Clinique Médical Nathan',
     description:
-      "Conception et réalisation intégrale du site de la clinique",
+      "Un site qui rassure les patients dès la première visite. Je l'ai conçu et réalisé de A à Z pour la clinique, en React et TypeScript.",
     stack: ['React', 'TypeScript', 'Hébergement', 'Migration'],
     icon: 'health',
     image: '',
@@ -154,7 +154,7 @@ export const projects = [
     type: 'academique',
     context: 'Université Aube Nouvelle',
     description:
-      'Application web de réservation et de gestion des chambres, avec gestion des clients et facturation automatisée. Travail en équipe sur l’architecture logicielle.',
+      'Réserver une chambre, suivre ses clients, facturer automatiquement : tout un hôtel géré depuis une seule application web. Un projet d’équipe où j’ai contribué à l’architecture logicielle.',
     stack: [],
     icon: 'building',
     image: '',
@@ -166,7 +166,7 @@ export const projects = [
     type: 'academique',
     context: 'Université Aube Nouvelle',
     description:
-      'Plateforme de gestion de biens immobiliers : suivi des propriétés, locataires et contrats de bail, avec des interfaces adaptatives.',
+      'Propriétés, locataires, contrats de bail : tout le suivi d’un parc immobilier réuni sur une seule plateforme, avec des interfaces qui s’adaptent à chaque écran.',
     stack: [],
     icon: 'home',
     image: '',
@@ -187,8 +187,8 @@ export const experiences = [
     title: 'Stagiaire IA / Computer Vision — VEXDRONE',
     org: 'Orange Digital Center · Orange Summer Challenge',
     points: [
-      "Système de détection d'anomalies sur pylônes et lignes électriques par vision par ordinateur (YOLO).",
-      "Conception et intégration frontend de l'application web de gestion et d'alerte.",
+      "Je développe un système qui détecte les anomalies sur les pylônes et les lignes électriques grâce à la vision par ordinateur (YOLO).",
+      "Je conçois et j'intègre l'interface de l'application web de gestion et d'alerte.",
     ],
   },
   {
@@ -196,22 +196,22 @@ export const experiences = [
     title: 'Technicienne Développeuse & Réseau',
     org: 'Impact Africa Solution Technology (IAS Tech)',
     points: [
-      "Réalisation des sites de l'ABCA et de l'entreprise (WordPress).",
-      'Migration du site du FESPACO, mise en production du site de la Cinémathèque Africaine.',
-      'Câblage structuré, configuration de routeurs, déploiement de Wifizone avec portails captifs.',
+      "J'ai créé de A à Z les sites de l'ABCA et d'IAS Tech sous WordPress.",
+      "J'ai migré le site du FESPACO et mis en production celui de la Cinémathèque Africaine.",
+      "J'ai déployé des Wifizones avec portails captifs, configuré routeurs et points d'accès, et réalisé du câblage structuré.",
     ],
   },
   {
     period: 'Mars 2026 — Juin 2026',
     title: 'Stagiaire Développeuse — Stage de fin de cycle',
     org: 'Moov Africa Burkina',
-    points: ["Conception et réalisation intégrale de MoovFlow, plateforme de gestion des événements d'entreprise."],
+    points: ["J'ai conçu et développé MoovFlow de A à Z : la plateforme qui centralise l'administration des événements de l'entreprise."],
   },
   {
     period: 'Août 2024 — Oct. 2024',
     title: 'Technicienne Stagiaire Polyvalente',
     org: 'Flashtech',
-    points: ['Développement web, maintenance informatique, dépannage réseau et création de supports infographiques.'],
+    points: ['Ma première immersion sur le terrain : développement web, maintenance informatique, dépannage réseau et création de supports graphiques.'],
   },
 ]
 
