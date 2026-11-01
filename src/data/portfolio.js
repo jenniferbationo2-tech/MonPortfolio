@@ -6,7 +6,7 @@ export const profile = {
   // Nom affiché sur l'intro : les initiales de chaque mot forment la signature BYCJ
   signatureName: 'BATIONO Yiboula Carine Jennifer',
   shortName: 'Carine Jennifer',
-  role: 'Étudiante en Licence 3 Génie Informatique',
+  role: 'Diplômée d\'une Licence en Ingénierie Informatique',
   location: 'Ouagadougou, Burkina Faso',
   email: 'jenniferbationo2@gmail.com',
   // Liens laissés vides = boutons masqués automatiquement
@@ -31,8 +31,8 @@ export const navLinks = [
 
 export const about = {
   text: [
-    "Je suis Carine Jennifer, étudiante en 3e année de Génie Informatique à l'Université Aube Nouvelle. Mon terrain de jeu ? Tout ce qui va du site web à l'intelligence artificielle, en passant par le réseau qui relie le tout.",
-    "Créative et autodidacte, je pars toujours d'un besoin réel : surveiller des lignes électriques grâce à l'IA, centraliser les événements d'une entreprise, mettre en ligne le site d'une grande institution. Ce que je construis doit vous simplifier la vie, pas la compliquer.",
+    "Je suis Carine Jennifer, diplômée d'une Licence en Ingénierie Informatique. Mon terrain de jeu ? Tout ce qui va du site web à l'intelligence artificielle, en passant par le réseau qui relie le tout.",
+    "Créative et passionnée, je pars toujours d'un besoin réel. Ce que je construis doit vous simplifier la vie, pas la compliquer.",
   ],
   pillars: [
     {
@@ -215,24 +215,13 @@ export const experiences = [
   },
 ]
 
+// status : 'Diplômée' et 'En cours' s'affichent en orange, le reste en bleu
 export const education = [
   {
-    period: '2025 — 2026',
-    title: 'Licence 3 en Génie Informatique',
+    period: '2023 — 2026',
+    title: 'Licence en Ingénierie Informatique',
     org: 'Université Aube Nouvelle (U-AUBEN), Ouagadougou',
-    status: 'En cours',
-  },
-  {
-    period: '2024 — 2025',
-    title: 'Licence 2 en Génie Informatique',
-    org: 'Université Aube Nouvelle (U-AUBEN), Ouagadougou',
-    status: 'Validé',
-  },
-  {
-    period: '2023 — 2024',
-    title: 'Licence 1 en Génie Informatique',
-    org: 'Université Aube Nouvelle (U-AUBEN), Ouagadougou',
-    status: 'Validé',
+    status: 'Diplômée',
   },
 ]
 

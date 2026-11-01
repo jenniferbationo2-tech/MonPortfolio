@@ -35,8 +35,8 @@ export default function Contact() {
         </Reveal>
         <Reveal delay={0.2}>
           <p className="max-w-xl text-lg leading-relaxed text-slate-300">
-            Un stage, une collaboration, un projet Web, Data ou IA ? Écrivez-moi : je serai ravie d'en discuter avec
-            vous, et ce premier échange ne vous engage à rien.
+            Un poste, une mission, une collaboration autour du Web, de la Data ou de l'IA ? Écrivez-moi : je serai ravie d'en discuter avec
+            vous.
           </p>
         </Reveal>
 

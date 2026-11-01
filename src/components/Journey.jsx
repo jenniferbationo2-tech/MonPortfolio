@@ -131,7 +131,7 @@ export default function Journey() {
                     <TimelineItem key={edu.title} index={i} {...edu}>
                       <span
                         className={`mt-3 inline-block rounded-full px-3 py-1 text-xs font-semibold ${
-                          edu.status === 'En cours' ? 'bg-orange/15 text-orange-dark' : 'bg-electric/10 text-electric'
+                          ['Diplômée', 'En cours'].includes(edu.status) ? 'bg-orange/15 text-orange-dark' : 'bg-electric/10 text-electric'
                         }`}
                       >
                         {edu.status}

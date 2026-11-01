@@ -1,6 +1,6 @@
 # BYCJ. — Portfolio
 
-Portfolio de **Carine Jennifer Bationo Yiboula**, étudiante en Licence 3 Génie Informatique (Université Aube Nouvelle, Ouagadougou) — Web, Data & Intelligence Artificielle.
+Portfolio de **Carine Jennifer Bationo Yiboula**, diplômée d'une Licence en Ingénierie Informatique (Université Aube Nouvelle, Ouagadougou) — Web, Data & Intelligence Artificielle.
 
 ## Sections
 
