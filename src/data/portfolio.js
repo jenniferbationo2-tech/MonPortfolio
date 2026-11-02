@@ -6,7 +6,7 @@ export const profile = {
   // Nom affiché sur l'intro : les initiales de chaque mot forment la signature BYCJ
   signatureName: 'BATIONO Yiboula Carine Jennifer',
   shortName: 'Carine Jennifer',
-  role: 'Diplômée d\'une Licence en Ingénierie Informatique',
+  role: 'Ingénieure des Travaux en Informatique',
   location: 'Ouagadougou, Burkina Faso',
   email: 'jenniferbationo2@gmail.com',
   // Liens laissés vides = boutons masqués automatiquement
@@ -31,7 +31,7 @@ export const navLinks = [
 
 export const about = {
   text: [
-    "Je suis Carine Jennifer, diplômée d'une Licence en Ingénierie Informatique. Mon terrain de jeu ? Tout ce qui va du site web à l'intelligence artificielle, en passant par le réseau qui relie le tout.",
+    "Je suis Carine Jennifer, titulaire d'un Diplôme d'Ingénieur des Travaux en Informatique. Mon terrain de jeu ? Tout ce qui va du site web à l'intelligence artificielle, en passant par le réseau qui relie le tout.",
     "Créative et passionnée, je pars toujours d'un besoin réel. Ce que je construis doit vous simplifier la vie, pas la compliquer.",
   ],
   pillars: [
@@ -219,7 +219,7 @@ export const experiences = [
 export const education = [
   {
     period: '2023 — 2026',
-    title: 'Licence en Ingénierie Informatique',
+    title: "Diplôme d'Ingénieur des Travaux en Informatique",
     org: 'Université Aube Nouvelle (U-AUBEN), Ouagadougou',
     status: 'Diplômée',
   },
