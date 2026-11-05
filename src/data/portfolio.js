@@ -227,6 +227,8 @@ export const education = [
 
 // image : photo/scan du certificat placé dans public/certifications/
 export const certifications = [
+  { title: "Compétences pratiques en IA pour le travail et l'entrepreneuriat", org: 'ImpactEra / World Bank Group / Microsoft Elevate', date: 'Oct. 2026', image: '/certifications/impactera-ia-jour2.jpeg' },
+  { title: "Fondamentaux de l'IA et opportunités pour l'Afrique", org: 'ImpactEra / World Bank Group / Microsoft Elevate', date: 'Oct. 2026', image: '/certifications/impactera-ia-jour1.jpeg' },
   { title: 'Formation Python Data Analyst', org: 'REESO', date: 'Janv. — Avr. 2026', image: '/certifications/python-data-analyst.jpg' },
   { title: 'Certificat Data Science & IA', org: 'GO AI Academy', date: 'Août 2025', image: '/certifications/GoIA.png' },
   { title: 'Sécurité Réseau Cisco', org: 'Coursera / ODC', date: 'Oct. 2025', image: '/certifications/ciscocoursera.jpeg' },
